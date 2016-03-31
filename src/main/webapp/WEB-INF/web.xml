@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>Zip-transparent file listing</display-name>
+
+<mime-mapping>
+<extension>html</extension>
+<mime-type>text/html</mime-type>
+</mime-mapping>
+
+
+<mime-mapping>
+<extension>zip</extension>
+<mime-type>text/html</mime-type>
+</mime-mapping>
+
+<mime-mapping>
+<extension>json</extension>
+<mime-type>application/json</mime-type>
+</mime-mapping>
+          
+    
+<servlet>
+    <servlet-name>absolute-file-servlet</servlet-name>
+    <servlet-class>
+      com.teslamotors.artifacts.servlet.FileServlet
+    </servlet-class>
+    <init-param>
+        <param-name>base-path</param-name>
+        <param-value>/home/kostmo</param-value>
+    </init-param>
+    
+    <init-param>
+        <param-name>contextXsltFile</param-name>
+        <param-value>WEB-INF/tesla-styling.xslt</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+
+<servlet-mapping>
+ <servlet-name>default</servlet-name>
+ <url-pattern>/static/*</url-pattern>
+</servlet-mapping>
+
+<!-- We make the browser available both from a "toplevel" path, and paths beneath "browse/".
+The latter is required if one is to browse to a directory named "static", since the toplevel
+name "static/" is reserved for serving images from the server. -->
+<servlet-mapping>
+ <servlet-name>absolute-file-servlet</servlet-name>
+ <url-pattern>/browse/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+ <servlet-name>absolute-file-servlet</servlet-name>
+ <url-pattern>/*</url-pattern>
+</servlet-mapping>
+</web-app>
